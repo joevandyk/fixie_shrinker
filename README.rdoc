@@ -1,0 +1,15 @@
+Uses the YUI Compressor to compress both stylesheets and javascript.
+
+Use like so, where the first filename is the name that you want your javascript (or css) file to be compressed as.
+
+    <%= compress_and_include_javascripts 'compressed_javascript.js',   'javascript', 'javascript2' %>
+    <%= compress_and_include_stylesheets 'compressed_stylesheets.css', 'stylesheet', 'stylesheet2' %>
+
+Javascript and CSS are continually compressed in development mode.  You deploy the compressed js and css, so there is no 
+server-side compression necessary.
+
+Inspired from http://github.com/mudge/asset_compressor/tree/master 
+
+Copyright (c) 2008 Joe Van Dyk, Fixie Consulting.  http://fixieconsulting.com
+
+YUI Compressor is Copyright (c) 2006 Yahoo! Inc. All rights reserved. See YUI-COMPRESSOR-LICENSE.txt for more information.
