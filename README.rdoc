@@ -6,7 +6,7 @@ Use like so, where the first filename is the name that you want your javascript 
     <%= compress_and_include_stylesheets 'compressed_stylesheets.css', 'stylesheet', 'stylesheet2' %>
 
 Javascript and CSS are continually compressed in development mode.  You deploy the compressed js and css, so there is no 
-server-side compression necessary.
+server-side compression necessary.  Because the YUI is ran on each page refresh (if the javascript or css changed), you are immediately alerted to any javascript or css errors.  No more waiting until deployment to realize that your javascript can't be minified!
 
 Inspired from http://github.com/mudge/asset_compressor/tree/master 
 
