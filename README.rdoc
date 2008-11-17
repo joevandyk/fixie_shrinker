@@ -1,4 +1,4 @@
-Fixie Shrinker is a Rails plugin that uses the <a href="http://developer.yahoo.com/yui/compressor/">YUI Compressor</a> to automatically compress both CSS and Javascript files.
+Fixie Shrinker is a Rails plugin that uses the YUI Compressor[link:http://developer.yahoo.com/yui/compressor/] to automatically compress both CSS and Javascript files.
 
 Javascript and CSS are continually compressed in development mode.  You deploy the compressed javascript and css, so there is no  server-side compression necessary.  Because the YUI is ran on each page refresh (if the javascript or css changed), you are immediately alerted to any javascript or css errors.  No more waiting until deployment to realize that your javascript can't be minified!
 
