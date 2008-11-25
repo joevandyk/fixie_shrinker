@@ -60,7 +60,7 @@ module FixieShrinker
         Open3::popen3(command) do |stdin, stdout, stderr|
           if error = stderr.read and !error.blank?
             File.delete(final_path) if File.exist?(final_path)
-            raise YUI_Error.new("YUI COMPRESSOR ERROR on <#{compressed_file_name}>: #{ error }")
+            raise YUI_Error.new("YUI COMPRESSOR ERROR on <#{sources.join(' and ')}>: #{ error }")
           end
         end
       end
