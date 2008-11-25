@@ -8,6 +8,13 @@ Use like so, where the first filename is the name that you want your javascript 
     <%= compress_and_include_stylesheets 'compressed_stylesheets.css', 'stylesheet', 'stylesheet2' %>
 
 
+Few notes:
+
+* YUI Compressor seems to have problems minifying already minified javascript.  Use uncompressed human-readable javascript libraries.
+
+* If there is an error that prevents YUI Compressor from working, it will compress each javascript file, one by one.  This will take a little bit of time, but shouldn't happen that often.  
+
+* If you work with bad javascript code, it might be necessary to not have YUI Compressor work on it -- so you'd use javascript_include_tag('calendar.js') or whatever.
 
 Inspired from http://github.com/mudge/asset_compressor/tree/master 
 

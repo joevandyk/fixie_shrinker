@@ -1,6 +1,7 @@
 require 'open3'
 module FixieShrinker
   
+  class YUI_Error < RuntimeError; end
   YUI = "#{File.dirname(__FILE__)}/yuicompressor-2.4.2.jar"
   
   mattr_accessor :environments
@@ -8,15 +9,23 @@ module FixieShrinker
 
   def compress_and_include_javascripts(compressed_file_name, *javascripts)
     compress_to javascript_path(compressed_file_name), *(javascripts.map { |j| javascript_path(j) })
+    `rm -rf #{RAILS_ROOT}/public/javascripts/*fixie_shrinked_for_debugging*`
     javascript_include_tag compressed_file_name
-  rescue Exception => e
-    javascript_include_tag(*javascripts) + report_error(e)
+  rescue YUI_Error => e
+    javascripts.map { |file|
+      begin 
+        compress_to javascript_path("fixie_shrinked_for_debugging--" + file), javascript_path(file)
+        javascript_include_tag("fixie_shrinked_for_debugging--" + file) 
+      rescue YUI_Error => f
+        javascript_include_tag(file) + report_error(f)
+      end
+    }.join
   end
   
   def compress_and_include_stylesheets(compressed_file_name, *stylesheets)
     compress_to stylesheet_path(compressed_file_name), *stylesheets.map { |s| stylesheet_path(s) }
     stylesheet_link_tag compressed_file_name
-  rescue Exception => e
+  rescue YUI_Error => e
     stylesheet_link_tag(*stylesheets) + report_error(e)
   end
   
@@ -51,7 +60,7 @@ module FixieShrinker
         Open3::popen3(command) do |stdin, stdout, stderr|
           if error = stderr.read and !error.blank?
             File.delete(final_path) if File.exist?(final_path)
-            raise "YUI COMPRESSOR ERROR: #{ error }"
+            raise YUI_Error.new("YUI COMPRESSOR ERROR on <#{compressed_file_name}>: #{ error }")
           end
         end
       end
