@@ -56,7 +56,7 @@ module FixieShrinker
 
       if !File.exist?(tmp_filename) or !File.exist?(final_path) or File.read(tmp_filename) != concat
         File.open(tmp_filename, 'w+') { |f| f << concat }
-        command = "java -jar #{YUI} #{tmp_filename} -o #{final_path}"
+        command = "java -jar #{YUI} #{tmp_filename} -o #{final_path} --line-break 0"
         Open3::popen3(command) do |stdin, stdout, stderr|
           if error = stderr.read and !error.blank?
             File.delete(final_path) if File.exist?(final_path)
